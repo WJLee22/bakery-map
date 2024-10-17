@@ -10,8 +10,8 @@ const { kakao } = window;
 function KakaoMap() {
     useEffect(() => {
         const container = document.getElementById('kakaoMap'); // 지도를 담을 영역의 DOM 객체 레퍼런스
-        
-        
+
+
         const lat = 37.58284829999999; // 위도
         const lng = 127.0105811; // 경도
         const options = {
@@ -20,7 +20,7 @@ function KakaoMap() {
         };
 
         //kakao.maps.Map: 지도 객체를 생성해주는 메서드. 매개변수로, 지도를 표시할 컨테이너와 중심 좌표, 확대 수준 등을 설정가능.
-        const map = new kakao.maps.Map(container, options); 
+        const map = new kakao.maps.Map(container, options);
         // 지도 생성 후 지도 객체 반환.
 
 
@@ -37,14 +37,14 @@ function KakaoMap() {
             radius: 1000 // 현재 설정 위치 기준 1000미터 반경 탐색.
         });
 
-        
+        let currentInfowindow = null; // 현재 열려 있는 정보 창을 저장하는 변수
 
         // 키워드 검색 완료 시 호출되는 콜백함수 placesSearchCB.
-        
+
         //data: 검색 결과로 반환된 장소의 배열입니다. 각 장소는 객체 형태로, 위치 정보, 이름, 주소 등 다양한 속성을 포함
-        
+
         //status: 검색 요청의 상태를 나타내는 값
-        
+
         //(kakao.maps.services.Status.OK 값은 요청이 성공적임을 나타냄, else=에러)
 
         //pagination: 검색 결과의 페이지 정보. 여러 페이지에 걸쳐 결과가 나올 경우 사용됨
@@ -69,6 +69,11 @@ function KakaoMap() {
 
             // 마커에 클릭이벤트를 등록합니다
             kakao.maps.event.addListener(marker, "click", function () {
+                // 현재 열려 있는 정보 창이 있으면 닫습니다
+                if (currentInfowindow) {
+                    currentInfowindow.close();
+                }
+
                 //kakao.maps.InfoWindow: 마커 클릭 시 나타나는 정보 창을 생성하는 객체
                 const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
                 infowindow.setContent(
@@ -77,6 +82,9 @@ function KakaoMap() {
                     "</div>"
                 );
                 infowindow.open(map, marker);
+
+                // 현재 열려 있는 정보 창을 업데이트합니다
+                currentInfowindow = infowindow;
             });
         }
     }, []); // 빈 배열로 설정하여 컴포넌트가 처음 렌더링될 때만 실행
