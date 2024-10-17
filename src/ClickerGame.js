@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 
 const ClickerGame = () => {
@@ -17,3 +18,4 @@ const ClickerGame = () => {
 };
 
 export default ClickerGame;
+
