@@ -1,6 +1,6 @@
 import React from "react";
 
-function Recipe() {
+function BakingClass() {
   return (
     <div>
       <h1>baking Page</h1>
@@ -8,3 +8,5 @@ function Recipe() {
     </div>
   );
 }
+
+export default BakingClass;
